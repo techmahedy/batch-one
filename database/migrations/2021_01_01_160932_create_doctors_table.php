@@ -18,8 +18,23 @@ class CreateDoctorsTable extends Migration
             $table->foreignId('designation_id')
                     ->index()
                     ->constrained()
-                    ->onDelete('cascade');
+                    ->onDelete('cascade')->nullable();
             $table->string('name');
+            $table->string('email',32)->unique();
+            $table->string('password',255);
+            $table->string('assistant_phone')->nullable();
+            $table->string('avatar')->nullable();
+            $table->integer('country_id')->nullable();
+            $table->double('visit_fee')->nullable();
+            $table->boolean('is_offday')->default(false);
+            $table->string('break_time')->nullable();
+            $table->json('education')->nullable();
+            $table->string('address')->nullable();
+            $table->mediumText('bio')->nullable();
+            $table->string('resume')->nullable();
+            $table->boolean('is_medelist')->default(false);
+            $table->timestamp('last_login')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
