@@ -4,8 +4,10 @@
 @endpush
 
 @section('content')
-<div class="card-header">Active Users 
-    
+<div class="card-header">Active Users
+
+    {{ Auth::guard('doctor')->user()->name }}
+
 </div>
 
 <div class="card-body">
