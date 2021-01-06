@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Facades\App\Helper\Helper;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Doctor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Providers\RouteServiceProvider;
@@ -29,7 +30,12 @@ class LoginController extends Controller
         if(isDoctorActive($request->email))
         {
             if(Auth::guard('doctor')->attempt($credentials))
-            {
+            {   
+                Doctor::whereEmail($request->email)
+                    ->update([
+                        'last_login' => \Carbon\Carbon::now()
+                    ]);
+
                 return redirect(RouteServiceProvider::DOCTOR);
             }
             return redirect()->action([

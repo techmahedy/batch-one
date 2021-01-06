@@ -1,18 +1,16 @@
-@extends('admin.layout.master')
+@extends('doctor.layout.master')
 
 @push('style')
 @endpush
 
 @section('content')
-<div class="card-header">Active Users
-
-    {{ Auth::guard('doctor')->user()->name }}
-
+<div class="card-header">
+    Your last login was {{ \Carbon\Carbon::parse(Auth::guard('doctor')->user()->last_login)->toFormattedDateString() }}
 </div>
 
 <div class="card-body">
 
-
+<h1>Welcome {{ Auth::guard('doctor')->user()->name }}.</h1>
 
 </div>
 @endsection

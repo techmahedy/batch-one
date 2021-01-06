@@ -63,8 +63,8 @@
                                     <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                    <button type="button" tabindex="0" class="dropdown-item">User Account</button>
-                                    <button type="button" tabindex="0" class="dropdown-item">Settings</button>
+                                    <button type="button" tabindex="0" class="dropdown-item">Profile</button>
+                                    <a href="{{ route('doctor.change.password') }}" tabindex="0" class="dropdown-item">Change Password</a>
                                     <a class="dropdown-item" href="{{ route('doctor.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
