@@ -39,8 +39,10 @@ Route::name('doctor.')->namespace('Doctor')->prefix('doctor')->group(function(){
             ]);
         })->name('logout');
 
+        //Doctor profile related route
         Route::get('/change/password','ChangePasswordController@index')->name('change.password');
         Route::patch('/change/password','ChangePasswordController@change_password');
+        Route::get('/profile/{id}', 'ProfileController@index')->name('profile');
 
     });
 
