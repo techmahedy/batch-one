@@ -18,7 +18,7 @@
 </div>
 
 <div class="card-body">
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('doctor.profile',$doctor->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
     <div class="row">
@@ -38,13 +38,17 @@
                 <input type="text" name="assistant_phone" class="form-control" value="{{ $doctor->assistant_phone }}">
             </div>
 
+            <div class="col-md-12 mb-2" id="image_hidden">
+                <img id="image_preview_container" src="" style="max-height: 100px; border-radius:50%;">
+            </div>
+
             <div class="position-relative form-group">
                 <label for="examplePassword" class="">Avatar</label>
-                <input type="file" name="avatar" class="form-control">
+                <input type="file" name="avatar" id="avatar" class="form-control">
             </div>
             <div class="position-relative form-group">
                 <label for="examplePassword" class="">Seelct Country</label>
-                <select name="" id="" class="form-control">
+                <select name="country_id" class="form-control">
                     <option value="0">Select name</option>
                     @forelse (\App\Models\Country::select('id','name')->get() as $item)
                     <option value="{{ $item->id }}" {{ $doctor->country_id == $item->id ? 'selected' : ''}}>{{ $item->name }}</option>
@@ -63,7 +67,7 @@
             </div>
 
             <div class="hidden_break_time" style="display: none;">
-                <select name="" id="" class="form-control">
+                <select name="offday" class="form-control">
                     <option value="saturday">Saturday</option>
                     <option value="sunday">Sunday</option>
                     <option value="monday">Monday</option>
@@ -83,10 +87,10 @@
             <table class="table table-bordered" id="dynamic_field"> 
                 <tr>  
                 <td>
-                    <input type="text" name="education[0][key]" placeholder="Degree" class="form-control form-control-sm key_list" id="key" required>
+                    <input type="text" name="education[0][key]" placeholder="Degree" class="form-control form-control-sm key_list" id="key">
                 </td>
                 <td>
-                    <input type="text" name="education[0][value]" placeholder="Institution" class="form-control form-control-sm value_list" id="value" required>
+                    <input type="text" name="education[0][value]" placeholder="Institution" class="form-control form-control-sm value_list" id="value">
                 </td>   
                 <td>
                     <button type="button" id="degree_add" class="btn btn-success fa fa-plus-circle">
@@ -102,16 +106,16 @@
 
             <div class="position-relative form-group">
                 <label for="examplePassword" class="">Your Bio</label>
-                <textarea name="bio" id="" class="form-control">{{ $doctor->bio }}</textarea>
+                <textarea name="bio" class="form-control">{{ $doctor->bio }}</textarea>
             </div>
             
             <div class="position-relative form-group">
                 <label for="examplePassword" class="">Reusme</label>
-                <input type="file" name="address" class="form-control">
+                <input type="file" name="resume" class="form-control">
             </div>
 
             <div class="position-relative form-group">
-                <input type="checkbox" name="is_offday" value="1" {{ $doctor->is_medelist == 1 ? 'checked' : '' }}> Is Madelist?
+                <input type="checkbox" name="is_medelist" value="1" {{ $doctor->is_medelist == 1 ? 'checked' : '' }}> Is Madelist?
             </div>
         </div>
         <div class="col-md-6">
@@ -122,52 +126,53 @@
                 <input type="checkbox" id="experience"> Any Experience?
             </div>
             <img src="{{ asset('loader/loader.gif') }}" id="loader" style="display: none;">
-
-            <div class="doctor_experiece clone_experience" style="display: none;">
-                <div class="position-relative form-group">
-                    <label for="examplePassword" class="">Start Date</label>
-                    <input type="date" name="start_date" class="form-control">
+            <div class="doctor_experiece" style="display: none;">
+                <div class="control-group clone_experience">
+                    <div class="position-relative form-group">
+                        <label for="examplePassword" class="">Start Date</label>
+                        <input type="date" name="start_date[]" class="form-control">
+                    </div>
+                    <div class="position-relative form-group">
+                        <label for="examplePassword" class="">End Date</label>
+                        <input type="date" name="end_date[]" class="form-control">
+                    </div>
+                    <div class="position-relative form-group">
+                        <label for="examplePassword" class="">Clinic Name</label>
+                        <input type="text" name="clinic_name[]" class="form-control">
+                    </div>    
                 </div>
-                <div class="position-relative form-group">
-                    <label for="examplePassword" class="">End Date</label>
-                    <input type="date" name="end_date" class="form-control">
-                </div>
-                <div class="position-relative form-group">
-                    <label for="examplePassword" class="">Clinic Name</label>
-                    <input type="text" name="clinic_name" class="form-control">
-                </div>
-
+    
                 <div class="clone" style="display: none;">
                     <div class="control-group">
                     <h5>Experience</h5>
                     <div class="position-relative form-group">
                         <label for="examplePassword" class="">Start Date</label>
-                        <input type="date" name="start_date" class="form-control">
+                        <input type="date" name="start_date[]" class="form-control">
                     </div>
                     <div class="position-relative form-group">
                         <label for="examplePassword" class="">End Date</label>
-                        <input type="date" name="end_date" class="form-control">
+                        <input type="date" name="end_date[]" class="form-control">
                     </div>
                     <div class="position-relative form-group">
                         <label for="examplePassword" class="">Clinic Name</label>
-                        <input type="text" name="clinic_name" class="form-control">
+                        <input type="text" name="clinic_name[]" class="form-control">
                     </div>
                     <button class="btn btn-danger btn-sm btn-remove" type="button"><i class="fa fa-window-close"></i> Remove</button>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success pull-right mb-3" id="addMoreExperience">Add More Experience</button>
+                 <button type="button" class="btn btn-success pull-right mb-3" id="addMoreExperience">Add More Experience</button>
             </div>
 
             <label for="">Upload Certificate<small> (You can choose one or multiple)</small></label>
 
             <div class="input-group control-group img_div form-group" >
-                <input type="file" name="image[]" class="form-control">
+                <input type="file" name="documents[]" class="form-control">
                 <button class="btn btn-dark btn-sm btn-add-more" type="button"><i class="fa fa-plus-circle"></i>Add More</button>
             </div>
         
             <div class="documents hide" style="display: none;">
                 <div class="control-group input-group form-group">
-                  <input type="file" name="image[]" class="form-control"> 
+                  <input type="file" name="documents[]" class="form-control"> 
                   <button class="btn btn-danger btn-sm documents-remove" type="button"><i class="fa fa-window-close"></i>Remove</button>
                 </div>
             </div>
@@ -262,6 +267,18 @@
         $(document).on('click', '.btn_remove', function(){  
             var button_id = $(this).attr("id");   
             $('#row'+button_id+'').remove();  
+        });
+
+        //instant avatar preview display
+        $('#image_hidden').hide();
+        
+        $(document).on('change','#avatar',function(){
+            $('#image_hidden').fadeIn();
+            let reader = new FileReader();
+            reader.onload = (e) => { 
+                $('#image_preview_container').attr('src', e.target.result); 
+            }
+            reader.readAsDataURL(this.files[0]); 
         });
     })
 
