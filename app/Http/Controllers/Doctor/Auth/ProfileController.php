@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Doctor\Auth;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Experience;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
@@ -12,7 +13,7 @@ class ProfileController extends Controller
     public function index(Doctor $doctor)
     {   
         $id = Auth::guard('doctor')->id();
-        
+
         return view('doctor.profile.profile',[
             'doctor' => $doctor::findOrfail($id)
         ]);
@@ -31,12 +32,45 @@ class ProfileController extends Controller
 
             $date1 = $request->start_date[$i];
             $date2 = $request->end_date[$i];
-
             $diff = differenceBetweenTwoDate($date1, $date2);
-
             $experience_in_month += $diff;
+
+            if($this->doctorExpericenceIsExists($request->experience_id[$i]))
+            {
+                //update the row
+            }
+            else
+            {
+                //insert the new row
+            }
+
         }
 
-        return $experience_in_month;
+        Doctor::find($id)->update(
+            $request->except(
+                [
+                    '_token',
+                    '_method',
+                    'start_date',
+                    'end_date',
+                    'clinic_name',
+                    'resume',
+                    'documents'
+                ]
+            )
+        );
+
+        return redirect()->back();
+    }
+
+    public function doctorExpericenceIsExists($id) : bool
+    {
+        $check = Experience::where('id',$id)->exists();
+
+        if($check)
+        {
+            return true;
+        }
+        return false;
     }
 }

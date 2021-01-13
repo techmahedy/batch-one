@@ -14,6 +14,10 @@ class Doctor extends Authenticatable
     
     protected $guarded = [];
     
+    protected $casts = [
+        'education' => 'array'
+    ];
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
@@ -22,5 +26,23 @@ class Doctor extends Authenticatable
     public function scopeIsActive($query)
     {
         return $query->where('is_active',1);
+    }
+
+    public function setEducationAttribute($value)
+    {
+        $education = [];
+
+        foreach ($value as $array_item) {
+            if (!is_null($array_item['key'])) {
+                $education[] = $array_item;
+            }
+        }
+
+        $this->attributes['education'] = json_encode($education);
+    }
+
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class,'doctor_id');
     }
 }

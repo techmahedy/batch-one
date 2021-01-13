@@ -15,6 +15,7 @@
 @section('content')
 <div class="card-header">
     Update Profile
+    @php $ex_counter = $doctor->experiences->count(); @endphp
 </div>
 
 <div class="card-body">
@@ -68,34 +69,54 @@
 
             <div class="hidden_break_time" style="display: none;">
                 <select name="offday" class="form-control">
-                    <option value="saturday">Saturday</option>
-                    <option value="sunday">Sunday</option>
-                    <option value="monday">Monday</option>
-                    <option value="tuesday">Tuesday</option>
-                    <option value="wednesday">Wednesday</option>
-                    <option value="thursday">Thursday</option>
-                    <option value="friday">Friday</option>
+                    <option value="saturday" {{ $doctor->offday == 'saturday' ? 'selected' : '' }}>Saturday</option>
+                    <option value="sunday" {{ $doctor->offday == 'sunday' ? 'selected' : '' }}>Sunday</option>
+                    <option value="monday" {{ $doctor->offday == 'monday' ? 'selected' : '' }}>Monday</option>
+                    <option value="tuesday" {{ $doctor->offday == 'tuesday' ? 'selected' : '' }}>Tuesday</option>
+                    <option value="wednesday" {{ $doctor->offday == 'wednesday' ? 'selected' : '' }}>Wednesday</option>
+                    <option value="thursday" {{ $doctor->offday == 'thursday' ? 'selected' : '' }}>Thursday</option>
+                    <option value="friday" {{ $doctor->offday == 'friday' ? 'selected' : '' }}>Friday</option>
                 </select>
             </div>
-            
+            <br>
             <div class="position-relative form-group">
                 <label for="examplePassword" class="">Break Time</label>
                 <input type="text" name="break_time" class="form-control" value="{{ $doctor->break_time }}" placeholder="ex.. 4.00 pm to 5.00 pm">
             </div>
 
             <label for="">Your degree</label>
+            @php $counter = 0; @endphp
+            @foreach ($doctor->education as $education)
             <table class="table table-bordered" id="dynamic_field"> 
                 <tr>  
                 <td>
-                    <input type="text" name="education[0][key]" placeholder="Degree" class="form-control form-control-sm key_list" id="key">
+                    <input type="text" name="education[{{ $counter }}][key]" value="{{ $education['key'] }}" class="form-control form-control-sm key_list" id="key">
                 </td>
                 <td>
-                    <input type="text" name="education[0][value]" placeholder="Institution" class="form-control form-control-sm value_list" id="value">
+                    <input type="text" name="education[{{ $counter }}][value]" value="{{ $education['value'] }}" class="form-control form-control-sm value_list" id="value">
                 </td>   
                 <td>
                     <button type="button" id="degree_add" class="btn btn-success fa fa-plus-circle">
                     </button>
                 </td>  
+                </tr>  
+            </table>
+            @php $counter++; @endphp
+            @endforeach
+
+            <table class="table table-bordered" id="dynamic_field"> 
+                <tr>  
+                <td>
+                    <input type="text" name="education[{{ $counter }}][key]" placeholder="Degree" class="form-control form-control-sm key_list" id="key">
+                </td>
+                <td>
+                    <input type="text" name="education[{{ $counter }}][value]" placeholder="Institution" class="form-control form-control-sm value_list" id="value">
+                </td>   
+                <td>
+                    <button type="button" id="degree_add" class="btn btn-success fa fa-plus-circle">
+                    </button>
+                </td>  
+                <input type="hidden" id="counter" value="{{ $counter }}">
                 </tr>  
             </table>
 
@@ -122,12 +143,34 @@
             <blockquote class="custom_block">
                 Your Experience!
             </blockquote>
+
+            @if( $ex_counter > 0)
+            @foreach ($doctor->experiences as $item)
+            <div class="control-group clone_experience">
+                <input type="hidden" name="experience_id[]" value="{{ $item->id }}">
+                <div class="position-relative form-group">
+                    <label for="examplePassword" class="">Start Date</label>
+                    <input type="date" name="start_date[]" class="form-control" value="{{ $item->start_date }}">
+                </div>
+                <div class="position-relative form-group">
+                    <label for="examplePassword" class="">End Date</label>
+                    <input type="date" name="end_date[]" class="form-control" value="{{ $item->end_date }}">
+                </div>
+                <div class="position-relative form-group">
+                    <label for="examplePassword" class="">Clinic Name</label>
+                    <input type="text" name="clinic_name[]" class="form-control" value="{{ $item->clinic_name }}">
+                </div>    
+            </div>
+            @endforeach
+            @endif
+            
             <div class="position-relative form-group">
                 <input type="checkbox" id="experience"> Any Experience?
             </div>
             <img src="{{ asset('loader/loader.gif') }}" id="loader" style="display: none;">
             <div class="doctor_experiece" style="display: none;">
                 <div class="control-group clone_experience">
+                    <input type="hidden" name="experience_id[]">
                     <div class="position-relative form-group">
                         <label for="examplePassword" class="">Start Date</label>
                         <input type="date" name="start_date[]" class="form-control">
@@ -145,6 +188,7 @@
                 <div class="clone" style="display: none;">
                     <div class="control-group">
                     <h5>Experience</h5>
+                    <input type="hidden" name="experience_id[]">
                     <div class="position-relative form-group">
                         <label for="examplePassword" class="">Start Date</label>
                         <input type="date" name="start_date[]" class="form-control">
@@ -193,6 +237,11 @@
     
     $(document).ready(function(){
         
+        if($("#is_offday").prop("checked") == true)
+        {
+            $('.hidden_break_time').fadeIn();
+        }
+
         //hiding or showing is_offday div
         $("#is_offday").click(function() {
             if($("#is_offday").prop("checked")) {
@@ -254,14 +303,14 @@
 
         //add more degree attributes options
         var i = 0;  
-                
+        let counter = $('#counter').val();    
         $('body').on('click','#degree_add',function(){ 
             
         var key = $("#key").val();
         var value = $("#value").val();
-        i++;  
+        counter++;  
 
-        $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" name="education['+i+'][key]" placeholder="Degree" class="form-control form-control-sm key_list" value="'+key+'" /></td><td><input type="text" name="education['+i+'][value]" placeholder="Institution" class="form-control form-control-sm value_list" value="'+value+'" /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger fa fa-window-close btn_remove"></button></td></tr>');  
+        $('#dynamic_field').append('<tr id="row'+counter+'" class="dynamic-added"><td><input type="text" name="education['+counter+'][key]" placeholder="Degree" class="form-control form-control-sm key_list" value="'+key+'" /></td><td><input type="text" name="education['+counter+'][value]" placeholder="Institution" class="form-control form-control-sm value_list" value="'+value+'" /></td><td><button type="button" name="remove" id="'+counter+'" class="btn btn-danger fa fa-window-close btn_remove"></button></td></tr>');  
         });  
 
         $(document).on('click', '.btn_remove', function(){  
