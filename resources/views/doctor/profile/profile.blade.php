@@ -28,7 +28,7 @@
                 <label for="examplePassword" class="">Name</label>
                 <input type="text" name="name" class="form-control" value="{{ $doctor->name }}">
             </div>
-    
+
             <div class="position-relative form-group">
                 <label for="examplePassword" class="">Email</label>
                 <input type="text" name="email" class="form-control" value="{{ $doctor->email }}">
@@ -57,7 +57,7 @@
                     @endforelse
                 </select>
             </div>
-            
+
             <div class="position-relative form-group">
                 <label for="examplePassword" class="">Visit Fee</label>
                 <input type="number" name="visit_fee" class="form-control" value="{{ $doctor->visit_fee }}">
@@ -83,41 +83,42 @@
                 <label for="examplePassword" class="">Break Time</label>
                 <input type="text" name="break_time" class="form-control" value="{{ $doctor->break_time }}" placeholder="ex.. 4.00 pm to 5.00 pm">
             </div>
-
+    
             <label for="">Your degree</label>
             @php $counter = 0; @endphp
+            @if($doctor->education)
             @foreach ($doctor->education as $education)
-            <table class="table table-bordered" id="dynamic_field"> 
-                <tr>  
+            <table class="table table-bordered" id="dynamic__field">
+                <tr>
                 <td>
                     <input type="text" name="education[{{ $counter }}][key]" value="{{ $education['key'] }}" class="form-control form-control-sm key_list" id="key">
                 </td>
                 <td>
                     <input type="text" name="education[{{ $counter }}][value]" value="{{ $education['value'] }}" class="form-control form-control-sm value_list" id="value">
-                </td>   
+                </td>
                 <td>
-                    <button type="button" id="degree_add" class="btn btn-success fa fa-plus-circle">
+                    <button type="button" id="degree_add" class="btn btn-success fa fa-plus-circle" disabled>
                     </button>
-                </td>  
-                </tr>  
+                </td>
+                </tr>
             </table>
             @php $counter++; @endphp
             @endforeach
-
-            <table class="table table-bordered" id="dynamic_field"> 
-                <tr>  
+@endif
+            <table class="table table-bordered" id="dynamic_field">
+                <tr>
                 <td>
                     <input type="text" name="education[{{ $counter }}][key]" placeholder="Degree" class="form-control form-control-sm key_list" id="key">
                 </td>
                 <td>
                     <input type="text" name="education[{{ $counter }}][value]" placeholder="Institution" class="form-control form-control-sm value_list" id="value">
-                </td>   
+                </td>
                 <td>
                     <button type="button" id="degree_add" class="btn btn-success fa fa-plus-circle">
                     </button>
-                </td>  
+                </td>
                 <input type="hidden" id="counter" value="{{ $counter }}">
-                </tr>  
+                </tr>
             </table>
 
             <div class="position-relative form-group">
@@ -129,7 +130,7 @@
                 <label for="examplePassword" class="">Your Bio</label>
                 <textarea name="bio" class="form-control">{{ $doctor->bio }}</textarea>
             </div>
-            
+
             <div class="position-relative form-group">
                 <label for="examplePassword" class="">Reusme</label>
                 <input type="file" name="resume" class="form-control">
@@ -159,11 +160,11 @@
                 <div class="position-relative form-group">
                     <label for="examplePassword" class="">Clinic Name</label>
                     <input type="text" name="clinic_name[]" class="form-control" value="{{ $item->clinic_name }}">
-                </div>    
+                </div>
             </div>
             @endforeach
             @endif
-            
+
             <div class="position-relative form-group">
                 <input type="checkbox" id="experience"> Any Experience?
             </div>
@@ -182,9 +183,9 @@
                     <div class="position-relative form-group">
                         <label for="examplePassword" class="">Clinic Name</label>
                         <input type="text" name="clinic_name[]" class="form-control">
-                    </div>    
+                    </div>
                 </div>
-    
+
                 <div class="clone" style="display: none;">
                     <div class="control-group">
                     <h5>Experience</h5>
@@ -213,10 +214,10 @@
                 <input type="file" name="documents[]" class="form-control">
                 <button class="btn btn-dark btn-sm btn-add-more" type="button"><i class="fa fa-plus-circle"></i>Add More</button>
             </div>
-        
+
             <div class="documents hide" style="display: none;">
                 <div class="control-group input-group form-group">
-                  <input type="file" name="documents[]" class="form-control"> 
+                  <input type="file" name="documents[]" class="form-control">
                   <button class="btn btn-danger btn-sm documents-remove" type="button"><i class="fa fa-window-close"></i>Remove</button>
                 </div>
             </div>
@@ -234,9 +235,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script type="text/javascript">
-    
+
     $(document).ready(function(){
-        
+
         if($("#is_offday").prop("checked") == true)
         {
             $('.hidden_break_time').fadeIn();
@@ -255,7 +256,7 @@
                 },1000)
             }
         });
-        
+
         //hiding or showing experience div
         $("#experience").click(function() {
             if($("#experience").prop("checked")) {
@@ -271,7 +272,7 @@
                 },1000)
             }
         });
-        
+
         //clone experiences
         $('body').on('click','#addMoreExperience',function(){
         	var html = $(".clone").html();
@@ -279,7 +280,7 @@
         })
 
         //remove clone
-        $("body").on("click",".btn-remove",function(){ 
+        $("body").on("click",".btn-remove",function(){
         	Swal.fire({
 				  title: 'Do you want to remove this experience?',
 				  showDenyButton: true,
@@ -288,46 +289,48 @@
 				}).then((result) => {
 				  if (result.isConfirmed) {
 				    $(this).parents(".control-group").remove();
-				} 
+				}
 			})
 		});
-        
+
         //Documents addmore code goes here
-        $(".btn-add-more").click(function(){ 
+        $(".btn-add-more").click(function(){
             var html = $(".documents").html();
             $(".img_div").after(html);
         });
-        $("body").on("click",".documents-remove",function(){ 
+        $("body").on("click",".documents-remove",function(){
             $(this).parents(".control-group").remove();
         });
 
         //add more degree attributes options
-        var i = 0;  
-        let counter = $('#counter').val();    
-        $('body').on('click','#degree_add',function(){ 
-            
+        var i = 0;
+        let counter = $('#counter').val();
+        $('body').on('click','#degree_add',function(){
+
         var key = $("#key").val();
         var value = $("#value").val();
-        counter++;  
+        key= '';
+        value = '';
+        counter++;
 
-        $('#dynamic_field').append('<tr id="row'+counter+'" class="dynamic-added"><td><input type="text" name="education['+counter+'][key]" placeholder="Degree" class="form-control form-control-sm key_list" value="'+key+'" /></td><td><input type="text" name="education['+counter+'][value]" placeholder="Institution" class="form-control form-control-sm value_list" value="'+value+'" /></td><td><button type="button" name="remove" id="'+counter+'" class="btn btn-danger fa fa-window-close btn_remove"></button></td></tr>');  
-        });  
+        $('#dynamic_field').append('<tr id="row'+counter+'" class="dynamic-added"><td><input type="text" name="education['+counter+'][key]" placeholder="Degree" class="form-control form-control-sm key_list" value="'+key+'" /></td><td><input type="text" name="education['+counter+'][value]" placeholder="Institution" class="form-control form-control-sm value_list" value="'+value+'" /></td><td><button type="button" name="remove" id="'+counter+'" class="btn btn-danger fa fa-window-close btn_remove"></button></td></tr>');
+        });
 
-        $(document).on('click', '.btn_remove', function(){  
-            var button_id = $(this).attr("id");   
-            $('#row'+button_id+'').remove();  
+        $(document).on('click', '.btn_remove', function(){
+            var button_id = $(this).attr("id");
+            $('#row'+button_id+'').remove();
         });
 
         //instant avatar preview display
         $('#image_hidden').hide();
-        
+
         $(document).on('change','#avatar',function(){
             $('#image_hidden').fadeIn();
             let reader = new FileReader();
-            reader.onload = (e) => { 
-                $('#image_preview_container').attr('src', e.target.result); 
+            reader.onload = (e) => {
+                $('#image_preview_container').attr('src', e.target.result);
             }
-            reader.readAsDataURL(this.files[0]); 
+            reader.readAsDataURL(this.files[0]);
         });
     })
 
@@ -339,7 +342,7 @@
 
     $(document).ready(function () {
         //Validate form data
-        $('#doctor_update_password').validate({ 
+        $('#doctor_update_password').validate({
         rules: {
             oldpassword: {
                 required: true

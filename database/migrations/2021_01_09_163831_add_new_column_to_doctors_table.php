@@ -14,7 +14,9 @@ class AddNewColumnToDoctorsTable extends Migration
     public function up()
     {
         Schema::table('doctors', function (Blueprint $table) {
-            $table->string('offday')->after('is_offday')->nullable();
+           $table->double('experience')->nullable();
+    
+             $table->string('offday')->after('is_offday')->nullable();
         });
     }
 
