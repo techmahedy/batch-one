@@ -4,15 +4,12 @@
 @endpush
 
 @section('content')
-<div class="card-header">Active Users 
-    
+<div class="card-header">
+   We are learing vue js
 </div>
 
-<div class="card-body">
+<example-component :test="{{ \App\Models\Doctor::first() }}"></example-component>
 
-
-
-</div>
 @endsection
 
 @push('stack')
