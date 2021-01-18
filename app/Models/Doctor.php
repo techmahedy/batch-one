@@ -45,4 +45,9 @@ class Doctor extends Authenticatable
     {
         return $this->hasMany(Experience::class,'doctor_id');
     }
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class,'doctor_id');
+    }
 }

@@ -1,0 +1,33 @@
+Hopefully you are safe from covid-19. Now i would like to show you Student Management System website project.It's a basic PHP project . For frontend i used HTML5,CSS3,JAVASCRIPT,BOOTSTARP and for backend i used PHP and MYSQL.
+
+This home page all students and admin can access.So if you want to access backend of this website you have to login first. If you are not registered you must register first.
+Even though You're registered you can't access backend directly,when Main admin gives you permission then you could access as an Admin.
+Firstly i will show you as an admin using my username and password.Then i will show you later how to register for an admin.
+
+If you have any question regarding this video contact with us
+
+
+Website : http://arshahin.com/
+GitHub : https://github.com/AR-Shahin
+Facebook : https://www.facebook.com/arshahin.111/
+Facebook-group : https://www.facebook.com/groups/330421938117842
+
+//key
+Laravel-7 CRUD with Mailtrap.io Verification
+PHP
+LARAVEL
+Laravel-7
+CRUD
+mailtrap.io
+mailtrap verification
+password retrieve
+forgot password retrieve
+laravel project
+php
+
+Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. Wikipedia
+Worst complexity: n^2
+Average complexity: n^2
+Best complexity: n
+Space complexity: 1
+Space complexity: O(1) 

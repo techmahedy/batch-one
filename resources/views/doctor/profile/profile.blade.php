@@ -15,6 +15,7 @@
 @section('content')
 <div class="card-header">
     Update Profile
+    {{ differenceBetweenTwoDate(1-06-2019,1-06-2020) }}
     @php $ex_counter = $doctor->experiences->count(); @endphp
 </div>
 
@@ -47,6 +48,10 @@
                 <label for="examplePassword" class="">Avatar</label>
                 <input type="file" name="avatar" id="avatar" class="form-control">
             </div>
+            <div class="col-md-12 mb-2" id="image_hidden">
+                <img src="{{ asset('avatars'.'/'.$doctor->avatar) }}" style="max-height: 50px; border-radius:50%;">
+            </div>
+
             <div class="position-relative form-group">
                 <label for="examplePassword" class="">Seelct Country</label>
                 <select name="country_id" class="form-control">
@@ -83,7 +88,7 @@
                 <label for="examplePassword" class="">Break Time</label>
                 <input type="text" name="break_time" class="form-control" value="{{ $doctor->break_time }}" placeholder="ex.. 4.00 pm to 5.00 pm">
             </div>
-    
+
             <label for="">Your degree</label>
             @php $counter = 0; @endphp
             @if($doctor->education)
@@ -135,7 +140,18 @@
                 <label for="examplePassword" class="">Reusme</label>
                 <input type="file" name="resume" class="form-control">
             </div>
-
+            <table class="table table-striped table-inverse">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>File</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>{{ $doctor->resume }}</td>
+                        <td><a href="{{ asset('resumes').'/'.$doctor->resume }}" class="btn btn-danger btn-sm py-0">Read</a></td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="position-relative form-group">
                 <input type="checkbox" name="is_medelist" value="1" {{ $doctor->is_medelist == 1 ? 'checked' : '' }}> Is Madelist?
             </div>
@@ -212,14 +228,35 @@
 
             <div class="input-group control-group img_div form-group" >
                 <input type="file" name="documents[]" class="form-control">
-                <button class="btn btn-dark btn-sm btn-add-more" type="button"><i class="fa fa-plus-circle"></i>Add More</button>
+                <button class="btn btn-dark btn-sm btn-add-more" type="button"><i class="fa fa-plus-circle"></i> Add More</button>
             </div>
 
             <div class="documents hide" style="display: none;">
                 <div class="control-group input-group form-group">
                   <input type="file" name="documents[]" class="form-control">
-                  <button class="btn btn-danger btn-sm documents-remove" type="button"><i class="fa fa-window-close"></i>Remove</button>
+                  <button class="btn btn-danger btn-sm documents-remove" type="button"><i class="fa fa-window-close"></i> Remove</button>
                 </div>
+            </div>
+                @forelse($doctor->certificates as $certificate)
+                <div class="control-group input-group form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="hidden" name="update_certifate[{{ $certificate->id }}]" class="form-control form-control-sm" value="{{ $certificate->id }}">
+                            {{ $certificate->documents }}
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <a href="/documents/{{ $certificate->documents }}" class="btn btn-success btn-sm py-0"> Read</a> |
+                            <button class="btn btn-sm btn-danger py-0 documents-remove custom_button_design">
+                            <i class="fa fa-window-close"></i>
+                            Remove
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                @empty
+                @endforelse
             </div>
         </div>
     </div>
