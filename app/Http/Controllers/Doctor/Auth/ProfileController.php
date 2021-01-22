@@ -115,7 +115,7 @@ class ProfileController extends Controller
         $certificates = Certificate::where('doctor_id',$id)->get();
 
         $count = Certificate::where('doctor_id',$id)->count();
-
+//return count($request->update_certifate);
         //delete documents
         if( $count > 0 ){
             if( $count != count($request->update_certifate) )

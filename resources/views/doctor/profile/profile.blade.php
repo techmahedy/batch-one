@@ -15,8 +15,8 @@
 @section('content')
 <div class="card-header">
     Update Profile
-    {{ differenceBetweenTwoDate(1-06-2019,1-06-2020) }}
-    @php $ex_counter = $doctor->experiences->count(); @endphp
+
+    @php $ex_counter = $doctor->experiences->count();  @endphp
 </div>
 
 <div class="card-body">
@@ -177,6 +177,7 @@
                     <label for="examplePassword" class="">Clinic Name</label>
                     <input type="text" name="clinic_name[]" class="form-control" value="{{ $item->clinic_name }}">
                 </div>
+                
             </div>
             @endforeach
             @endif
