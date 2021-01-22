@@ -14,7 +14,6 @@ class ProfileController extends Controller
     public function index(Doctor $doctor)
     {   
         $id = Auth::guard('doctor')->id();
-
         return view('doctor.profile.profile',[
             'doctor' => $doctor::findOrfail($id)
         ]);

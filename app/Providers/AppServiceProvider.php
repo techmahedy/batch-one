@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repository\Doctor\IDoctor;
 use Illuminate\Support\ServiceProvider;
+use App\Repository\Doctor\DoctorRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(IDoctor::class,DoctorRepository::class);
     }
 
     /**
