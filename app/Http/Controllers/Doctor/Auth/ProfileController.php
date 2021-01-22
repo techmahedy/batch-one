@@ -105,12 +105,7 @@ class ProfileController extends Controller
                 'experience' => round($experience_in_month / 12,1)
             ]);
         }
-        else
-        {
-            Doctor::find($id)->update([
-                'experience' => round($experience_in_month / 12,1)
-            ]);
-        }
+
 
         $certificates = Certificate::where('doctor_id',$id)->get();
 

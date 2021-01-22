@@ -1,15 +1,15 @@
 <?php
 
+use App\Models\Doctor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('admin.blank');
-});
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/', function () {
+    return null;
+});
 
 Route::namespace('Admin')->prefix('admin')->group(function(){
 
@@ -17,5 +17,11 @@ Route::namespace('Admin')->prefix('admin')->group(function(){
         Route::get('designation', 'DesignationController@index')->name('designation.index');
     });
 
+});
 
+//Frontend section
+Route::namespace('Frontend\Doctor')->group(function(){
+
+    Route::get('rptest', 'HomeController@index');
+    
 });
