@@ -90,7 +90,8 @@
 
             <label for="">Your degree</label>
             @php $counter = 0; @endphp
-            @foreach ($doctor->education as $education)
+            @if(!empty($doctor->education))
+            @forelse ($doctor->education as $education)
             <table class="table table-bordered" id="dynamic_field"> 
                 <tr>  
                 <td>
@@ -106,7 +107,9 @@
                 </tr>  
             </table>
             @php $counter++; @endphp
-            @endforeach
+            @empty 
+            @endforelse
+            @endif
 
             <table class="table table-bordered" id="dynamic_field"> 
                 <tr>  
@@ -242,8 +245,7 @@
                             <input type="hidden" name="update_certifate[{{ $certificate->id }}]" class="form-control form-control-sm" value="{{ $certificate->id }}"> 
                             {{ $certificate->documents }}
                         </div>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <a href="/documents/{{ $certificate->documents }}" class="btn btn-success btn-sm py-0"> Read</a> | 
                             <button class="btn btn-sm btn-danger py-0 documents-remove custom_button_design">
                             <i class="fa fa-window-close"></i> 

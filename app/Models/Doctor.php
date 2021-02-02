@@ -50,4 +50,14 @@ class Doctor extends Authenticatable
     {
         return $this->hasMany(Certificate::class,'doctor_id');
     }
+
+    public function designation()
+    {
+       return $this->belongsTo(Designation::class,'designation_id');
+    }
+
+    public function feedbacks()
+    {
+       return $this->hasMany(Feedback::class,'doctor_id');
+    }
 }
