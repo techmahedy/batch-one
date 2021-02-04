@@ -12,7 +12,10 @@ class DoctorRepository implements IDoctor
         return Doctor::all();
     }
 
-
+    public function getDoctorDetails(Doctor $slug)
+    {
+        return $slug;
+    }
 
 
 }

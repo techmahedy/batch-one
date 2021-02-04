@@ -53,7 +53,7 @@ button:hover, a:hover {
               @endif
               </p>
               <span style="margin-bottom:10px;">Feedbacks: ({{ $doctor->feedbacks()->count() }})</span>
-              <p><button>Details</button></p>
+              <p><a href="{{ route('doctor.single',$doctor->slug) }}"><button>Details</button></a></p>
           </div>
         @empty
         @endforelse
