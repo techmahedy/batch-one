@@ -20,5 +20,5 @@ Route::namespace('Frontend\Doctor')->group(function(){
 
     Route::get('/', 'HomeController@index');
     Route::get('/doctor/{slug}','DoctorController@doctorDetails')->name('doctor.single');
-    
+
 });
