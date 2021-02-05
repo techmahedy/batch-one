@@ -18,6 +18,13 @@ class HomeController extends Controller
     public function index()
     {
         $doctor = $this->doctor->getDoctor();
-        return $doctor->load('certificates');
+
+        $doctor->load('certificates','designation');
+
+        return view('welcome', 
+                    [
+                        'doctors' => $doctor->load('certificates')
+                    ]
+                );
     }
 }

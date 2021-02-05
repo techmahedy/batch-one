@@ -7,10 +7,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/', function () {
-    return null;
-});
-
 Route::namespace('Admin')->prefix('admin')->group(function(){
 
     Route::name('admin.')->group(function(){
@@ -22,6 +18,6 @@ Route::namespace('Admin')->prefix('admin')->group(function(){
 //Frontend section
 Route::namespace('Frontend\Doctor')->group(function(){
 
-    Route::get('rptest', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
     
 });
