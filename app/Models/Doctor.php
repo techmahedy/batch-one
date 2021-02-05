@@ -14,9 +14,23 @@ class Doctor extends Authenticatable
     
     protected $guarded = [];
     
+    protected $with = ['experiences','certificates','designation','feedbacks'];
+
+    public function __construct() {
+
+        parent::__construct();
+
+        $this->with = ['experiences','certificates','designation','feedbacks'];
+    }
+
     protected $casts = [
         'education' => 'array'
     ];
+    
+    public function getRouteKeyName()
+    {
+       return 'slug';
+    }
 
     public function setPasswordAttribute($value)
     {
@@ -54,6 +68,11 @@ class Doctor extends Authenticatable
     public function designation()
     {
        return $this->belongsTo(Designation::class,'designation_id');
+    }
+
+    public function country()
+    {
+       return $this->belongsTo(Country::class,'country_id');
     }
 
     public function feedbacks()
