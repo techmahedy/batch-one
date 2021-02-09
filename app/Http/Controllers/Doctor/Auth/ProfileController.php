@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller
 {
     public function index(Doctor $doctor)
-    {   
+    {
         $id = Auth::guard('doctor')->id();
         return view('doctor.profile.profile',[
             'doctor' => $doctor::findOrfail($id)
@@ -20,16 +20,17 @@ class ProfileController extends Controller
     }
 
     public function update_profile(Request $request, $id)
-    {   
+    {
         $experience = array_filter($request->start_date, function($filter){
             return ! empty($filter);
         });
-        
+
         $counter = sizeof($experience);
         $experience_in_month = 0;
 
-        for ($i = 0; $i < $counter; $i++) { 
+        
 
+        for ($i = 0; $i < $counter; $i++) {
             $date1 = $request->start_date[$i];
             $date2 = $request->end_date[$i];
             $diff = differenceBetweenTwoDate($date1, $date2);
@@ -54,7 +55,7 @@ class ProfileController extends Controller
                 ]);
             }
         }
-        
+
         if ($img = $request->file('avatar')) {
             $destinationPath = public_path('/avatars/');
             $image = $img->getClientOriginalName();
@@ -107,13 +108,13 @@ class ProfileController extends Controller
 
 
         $certificates = Certificate::where('doctor_id',$id)->get();
-      
+
         $count = Certificate::where('doctor_id',$id)->count();
-        
+//return count($request->update_certifate);
         //delete documents
         if( $count > 0 ){
             if( $count != count($request->update_certifate) )
-            {   
+            {
                 if( $request->update_certifate == true && $certificates ) {
                     foreach ($request->update_certifate as $value) {
                         foreach ($certificates as $certificate) {
@@ -125,7 +126,7 @@ class ProfileController extends Controller
                 }
             }
         }
-        
+
         //insert documents
         if ($files = $request->file('documents')) {
             $destinationPath = public_path('/documents/');
@@ -142,7 +143,7 @@ class ProfileController extends Controller
         return redirect()
                 ->back()
                 ->with('message','Profile updated successfully!');;
-                
+
     }
 
     public function doctorExpericenceIsExists($id) : bool
