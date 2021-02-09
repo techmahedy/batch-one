@@ -9,6 +9,6 @@ interface IDoctor
       
     public function getDoctor();
 
-    public function getDoctorDetails(Doctor $slug);
+    public function getDoctorDetails(Doctor $doctor);
 
 }

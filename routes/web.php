@@ -19,6 +19,6 @@ Route::namespace('Admin')->prefix('admin')->group(function(){
 Route::namespace('Frontend\Doctor')->group(function(){
 
     Route::get('/', 'HomeController@index');
-    Route::get('/doctor/{slug}','DoctorController@doctorDetails')->name('doctor.single');
+    Route::get('/doctor/{doctor}','DoctorController@doctorDetails')->name('doctor.single');
     
 });

@@ -16,10 +16,10 @@ class DoctorController extends Controller
         $this->doctor = $idoctor;
     }
 
-    public function doctorDetails(Doctor $slug)
+    public function doctorDetails(Doctor $doctor)
     {   
         return view('frontend.doctor.single',[
-            'doctor' => $this->doctor->getDoctorDetails($slug)
+            'doctor' => $this->doctor->getDoctorDetails($doctor)
         ]);
     }
 }
