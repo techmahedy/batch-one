@@ -91,17 +91,10 @@
 
             <label for="">Your degree</label>
             @php $counter = 0; @endphp
-<<<<<<< HEAD
-            @if($doctor->education)
-            @foreach ($doctor->education as $education)
-            <table class="table table-bordered" id="dynamic__field">
-                <tr>
-=======
             @if(!empty($doctor->education))
             @forelse ($doctor->education as $education)
-            <table class="table table-bordered" id="dynamic_field"> 
-                <tr>  
->>>>>>> f3164f5d24a2a7f480359c1092e09fe6424f2fc3
+            <table class="table table-bordered" id="dynamic_field">
+                <tr>
                 <td>
                     <input type="text" name="education[{{ $counter }}][key]" value="{{ $education['key'] }}" class="form-control form-control-sm key_list" id="key">
                 </td>
@@ -115,19 +108,12 @@
                 </tr>
             </table>
             @php $counter++; @endphp
-<<<<<<< HEAD
-            @endforeach
-@endif
-            <table class="table table-bordered" id="dynamic_field">
-                <tr>
-=======
-            @empty 
+            @empty
             @endforelse
             @endif
 
-            <table class="table table-bordered" id="dynamic_field"> 
-                <tr>  
->>>>>>> f3164f5d24a2a7f480359c1092e09fe6424f2fc3
+            <table class="table table-bordered" id="dynamic_field">
+                <tr>
                 <td>
                     <input type="text" name="education[{{ $counter }}][key]" placeholder="Degree" class="form-control form-control-sm key_list" id="key">
                 </td>
@@ -193,7 +179,7 @@
                     <label for="examplePassword" class="">Clinic Name</label>
                     <input type="text" name="clinic_name[]" class="form-control" value="{{ $item->clinic_name }}">
                 </div>
-                
+
             </div>
             @endforeach
             @endif
@@ -260,15 +246,7 @@
                         <div class="col-md-6">
                             <input type="hidden" name="update_certifate[{{ $certificate->id }}]" class="form-control form-control-sm" value="{{ $certificate->id }}">
                             {{ $certificate->documents }}
-                        </div>
-<<<<<<< HEAD
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4">
-                            <a href="/documents/{{ $certificate->documents }}" class="btn btn-success btn-sm py-0"> Read</a> |
-=======
-                        <div class="col-md-6">
-                            <a href="/documents/{{ $certificate->documents }}" class="btn btn-success btn-sm py-0"> Read</a> | 
->>>>>>> f3164f5d24a2a7f480359c1092e09fe6424f2fc3
+
                             <button class="btn btn-sm btn-danger py-0 documents-remove custom_button_design">
                             <i class="fa fa-window-close"></i>
                             Remove

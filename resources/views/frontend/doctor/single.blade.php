@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @push('css')
- <link href="{{ asset('css/doctor.css') }}" rel="stylesheet">
+<link href="{{ asset('css/doctor.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <form method="post">
+    <div class="container">
+        <div class="row">
+            <form method="post">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
@@ -16,13 +16,13 @@
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
-                        <h5>
-                            {{ $doctor->name }}
-                        </h5>
-                        <h6>
-                            {{ $doctor->designation->name ?? 'No designation' }}
-                        </h6>
-                        <p class="proile-rating">Feedback : <span>{{ $doctor->feedbacks()->count() }}</span></p>
+                            <h5>
+                                {{ $doctor->name }}
+                            </h5>
+                            <h6>
+                                {{ $doctor->designation->name ?? 'No designation' }}
+                            </h6>
+                            <p class="proile-rating">Feedback : <span>{{ $doctor->feedbacks()->count() }}</span></p>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -33,11 +33,17 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="education-tab" data-toggle="tab" href="#education" role="tab" aria-controls="education" aria-selected="false">Education</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="experience-tab" data-toggle="tab" href="#experience" role="tab" aria-controls="experience" aria-selected="false">experience</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="feedback-tab" data-toggle="tab" href="#feedback" role="tab" aria-controls="feedback" aria-selected="false">feedback</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                        <button class="profile-edit-btn">Appoint Me</button>
                     </div>
                 </div>
                 <div class="row">
@@ -118,7 +124,7 @@
                                     </div>
                                 </div>
 
-                                
+
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="row">
@@ -127,20 +133,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
+                            <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education">
                                 <div class="row">
                                     <div class="col">
-                                        <table>
-                                           <tr>
-                                              <th width="50%">Deegre</th>
-                                              <th width="50%">Institution</th>
-                                           </tr>
-                                           @if(!empty($doctor->education))
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th width="50%">Deegre</th>
+                                                <th width="50%">Institution</th>
+                                            </tr>
+                                            @if(!empty($doctor->education))
                                                 @forelse ($doctor->education as $education)
-                                                <tr>
-                                                    <td width="50%">{{ $education['key'] }}</td>
-                                                    <td width="50%">{{ $education['value'] }}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <td width="50%">{{ $education['key'] }}</td>
+                                                        <td width="50%">{{ $education['value'] }}</td>
+                                                    </tr>
                                                 @empty
                                                 @endforelse
                                             @endif
@@ -149,10 +155,47 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane fade show " id="experience" role="tabpanel" aria-labelledby="experience-tab">
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>SL</th>
+                                                <td>Clinic Name</td>
+                                                <td>Start Name</td>
+                                                <td>End Name</td>
+                                            </tr>
+                                            @forelse($doctor->experiences as $key =>$experience)
+                                                <tr>
+                                                    <td>{{++$key}}</td>
+                                                    <td>{{$experience->clinic_name}}</td>
+                                                    <td>{{$experience->start_date}}</td>
+                                                    <td>{{$experience->end_date}}</td>
+                                                </tr>
+                                            @empty
+                                            @endforelse
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show " id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>SL</th>
+                                                <td>Patient Name</td>
+                                                <td>Comment</td>
+                                                <td>Ratting</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
+        </div>
     </div>
-</div>
 @endsection

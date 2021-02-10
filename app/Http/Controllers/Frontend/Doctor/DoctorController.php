@@ -8,7 +8,7 @@ use App\Repository\Doctor\IDoctor;
 use App\Http\Controllers\Controller;
 
 class DoctorController extends Controller
-{   
+{
     public $doctor;
 
     public function __construct(IDoctor $idoctor)
@@ -17,7 +17,8 @@ class DoctorController extends Controller
     }
 
     public function doctorDetails(Doctor $slug)
-    {   
+    {
+       // return $this->doctor->getDoctorDetails($slug);
         return view('frontend.doctor.single',[
             'doctor' => $this->doctor->getDoctorDetails($slug)
         ]);
