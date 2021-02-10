@@ -38,6 +38,31 @@ button:hover, a:hover {
 
 @section('content')
 <div class="container">
+  <form action="{{ route('doctor.list') }}" method="GET">
+    <div class="row">
+        <div class="col-md-4">
+        <h3>Country</h3>
+        <select name="country" id="" class="form-control">
+          <option value="0">Select country</option>
+          @foreach (\App\Models\Country::select('id','name')->get() as $item)
+            <option value="{{ $item->id }}" {{ $select_doctor == $item->id ? 'selected' : '' }} >{{ $item->name }}</option>
+          @endforeach
+        </select>
+        </div>
+        <div class="col-md-4">
+          <h3>Designation</h3>
+        <select name="designation" id="" class="form-control">
+          <option value="0">Select designation</option>
+          @foreach (\App\Models\Designation::select('id','name')->get() as $item)
+            <option value="{{ $item->id }}" {{ $selected_designation == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+          @endforeach
+        </select>
+        </div>
+        <div class="col-md-4">
+          <input type="submit" class="btn btn-success" value="Filter">
+        </div>
+    </div>
+  </form>
     <div class="row">
         @forelse($doctors as $doctor)
           <div class="card col-md-4">
