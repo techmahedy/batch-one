@@ -93,8 +93,13 @@
             @php $counter = 0; @endphp
             @if(!empty($doctor->education))
             @forelse ($doctor->education as $education)
+<<<<<<< HEAD
             <table class="table table-bordered" id="dynamic_field">
                 <tr>
+=======
+            <table class="table table-bordered" id="dynamic_field"> 
+                <tr>  
+>>>>>>> a7f29d5b3513fbd1ab7f5912a567d62c832114c7
                 <td>
                     <input type="text" name="education[{{ $counter }}][key]" value="{{ $education['key'] }}" class="form-control form-control-sm key_list" id="key">
                 </td>
