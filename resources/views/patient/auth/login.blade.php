@@ -5,12 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Doctor Login') }}</div>
+                <div class="card-header">{{ __('Patient Login') }}</div>
                 @if(session()->has('message'))
                     <span>{{ session()->get('message') }}</span>
                 @endif
                 <div class="card-body">
-                    <form method="POST" action="{{ route('doctor.login') }}">
+                    <form method="POST" action="{{ route('patient.login') }}">
                         @csrf
 
                         <div class="form-group row">

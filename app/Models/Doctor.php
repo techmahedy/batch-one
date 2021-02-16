@@ -16,10 +16,9 @@ class Doctor extends Authenticatable
     
     protected $with = ['experiences','certificates','designation','feedbacks'];
 
-    public function __construct() {
-
+    public function __construct() 
+    {
         parent::__construct();
-
         $this->with = ['experiences','certificates','designation','feedbacks'];
     }
 
@@ -78,5 +77,10 @@ class Doctor extends Authenticatable
     public function feedbacks()
     {
        return $this->hasMany(Feedback::class,'doctor_id');
+    }
+
+    public function appointment()
+    {
+       return $this->hasMany(Appointment::class,'doctor_id');
     }
 }

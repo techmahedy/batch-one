@@ -14,7 +14,7 @@ class AddNewColumnInDoctorTable extends Migration
     public function up()
     {
         Schema::table('doctors', function (Blueprint $table) {
-            $table->string('slug')->nullable()->unique()->after('name');
+            //$table->string('slug')->nullable()->unique()->after('name');
         });
     }
 

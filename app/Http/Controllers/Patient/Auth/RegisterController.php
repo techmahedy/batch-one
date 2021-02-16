@@ -7,8 +7,10 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\PatientVerifyEmail;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Providers\RouteServiceProvider;
 
 class RegisterController extends Controller
 {
@@ -57,5 +59,16 @@ class RegisterController extends Controller
     public function login()
     {
         return view('patient.auth.login');
+    }
+
+    public function processLogin(Request $request)
+    {
+        $credentials = $request->except(['_token']);
+
+        if(Auth::guard('patient')->attempt($credentials))
+        {   
+            return redirect(RouteServiceProvider::PATIENT);
+        }
+        return redirect()->back()->with('message','Credentials not matced in our records!');
     }
 }

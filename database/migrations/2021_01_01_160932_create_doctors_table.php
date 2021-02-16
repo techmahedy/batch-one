@@ -20,6 +20,7 @@ class CreateDoctorsTable extends Migration
                     ->constrained()
                     ->onDelete('cascade');
             $table->string('name');
+            $table->string('slug');
             $table->string('email',32)->unique();
             $table->string('password',255);
             $table->string('assistant_phone')->nullable();
