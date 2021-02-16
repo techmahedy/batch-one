@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('css')
- <link href="{{ asset('css/doctor.css') }}" rel="stylesheet">
+<link href="{{ asset('css/doctor.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -143,11 +143,47 @@
 
                                 </table>
                             </div>
+                            <div class="tab-pane fade show " id="experience" role="tabpanel" aria-labelledby="experience-tab">
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>SL</th>
+                                                <td>Clinic Name</td>
+                                                <td>Start Name</td>
+                                                <td>End Name</td>
+                                            </tr>
+                                            @forelse($doctor->experiences as $key =>$experience)
+                                                <tr>
+                                                    <td>{{++$key}}</td>
+                                                    <td>{{$experience->clinic_name}}</td>
+                                                    <td>{{$experience->start_date}}</td>
+                                                    <td>{{$experience->end_date}}</td>
+                                                </tr>
+                                            @empty
+                                            @endforelse
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show " id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th>SL</th>
+                                                <td>Patient Name</td>
+                                                <td>Comment</td>
+                                                <td>Ratting</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
