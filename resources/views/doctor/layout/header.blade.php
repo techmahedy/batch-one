@@ -63,8 +63,8 @@
                                     <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                    <a href="{{ route('doctor.profile',Auth::guard('doctor')->id()) }}" tabindex="0" class="dropdown-item">Profile</a>
-                                    <a href="{{ route('doctor.change.password') }}" tabindex="0" class="dropdown-item">Change Password</a>
+                                    {{-- <a href="{{ route('doctor.profile',Auth::guard('doctor')->id()) }}" tabindex="0" class="dropdown-item">Profile</a>
+                                    <a href="{{ route('doctor.change.password') }}" tabindex="0" class="dropdown-item">Change Password</a> --}}
                                     <a class="dropdown-item" href="{{ route('doctor.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -8,20 +8,15 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PatientVerifyEmail extends Mailable
+class AppointmentAcceptedEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    
+
     public $patient;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     public function __construct(Patient $patient)
-    {   
-        $this->patient = $patient;
+    {  
+        $this->$patient = $patient;
     }
 
     /**
@@ -31,6 +26,8 @@ class PatientVerifyEmail extends Mailable
      */
     public function build()
     {   
-        return $this->view('patient.email.verify');
+        return $this->view('patient.email.accept')->with([
+            'name' => $this->patient->name
+        ]);
     }
 }

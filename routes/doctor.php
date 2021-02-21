@@ -2,14 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Providers\RouteServiceProvider;
-use App\Http\Controllers\Doctor\Auth\LoginController;
 
-Route::get('/test', function () {
-    return "test";
-});
-
-Route::name('doctor.')->namespace('Doctor')->prefix('doctor')->group(function(){
+Route::name('doctor.')->namespace('Doctor')->prefix('doctors')->group(function(){
 
     Route::namespace('Auth')->middleware('guest:doctor')->group(function(){
 
@@ -24,19 +18,13 @@ Route::name('doctor.')->namespace('Doctor')->prefix('doctor')->group(function(){
     Route::namespace('Auth')->middleware('auth:doctor')->group(function(){
         
         Route::get('/home',function(){
-            if(Auth::guard('doctor')->check())
-            {
-                return view('doctor.home');
-            }
-            abort(404);
+            return Auth::guard('doctor')->check()? 
+                view('doctor.home') : abort(404);
         })->name('home');
         
         Route::post('/logout',function(){
             Auth::guard('doctor')->logout();
-            return redirect()->action([
-                LoginController::class,
-                'login'
-            ]);
+            return redirect()->route('doctor.login');
         })->name('logout');
 
         //Doctor profile related route
@@ -46,6 +34,13 @@ Route::name('doctor.')->namespace('Doctor')->prefix('doctor')->group(function(){
         Route::patch('/profile/{id}', 'ProfileController@update_profile');
 
     });
-
+    
+    Route::middleware('auth:doctor')->group(function(){
+        //appointment route
+        Route::get('/appointment/list', 'AppointmentController@index')->name('appointment.list');
+        Route::get('/appointment/{id}', 'AppointmentController@accept')->name('appointment.accept');
+        Route::get('/appointment/reject/{id}', 'AppointmentController@reject')->name('appointment.reject');
+        Route::get('/appointment/seen/{id}', 'AppointmentController@seen')->name('appointment.seen');
+    });
 });
 

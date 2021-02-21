@@ -16,7 +16,7 @@ class AppointmentController extends Controller
         $doctor = Doctor::find($id);
 
         try {
-            $doctor->appointment()->create([
+            $doctor->appointments()->create([
                 'patient_id' => Auth::guard('patient')->id(),
                 'schedule_date' => date('Y-m-d'),
                 'status' => 0

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class LoginController extends Controller
 {   
     public function login()
-    {
+    {   
         if(View::exists('doctor.auth.login'))
         {
             return view('doctor.auth.login');

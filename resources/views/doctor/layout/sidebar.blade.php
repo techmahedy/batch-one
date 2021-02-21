@@ -38,6 +38,12 @@
                         Home
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('doctor.appointment.list') }}" class="mm-active">
+                        <i class="metismenu-icon pe-7s-rocket"></i>
+                        Appointment List
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
