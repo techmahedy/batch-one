@@ -17,6 +17,7 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {   
+
         $doctor = $this->doctor->getDoctor();
 
         $doctor = $doctor->when($request->country, function($doctor) use($request){

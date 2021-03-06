@@ -23,4 +23,5 @@ Route::namespace('Frontend\Doctor')->group(function(){
 
 Route::namespace('Frontend\Doctor')->middleware('auth:patient')->group(function(){
     Route::post('/appointment/{id}','AppointmentController@store')->name('appointment');
+    Route::post('/feedback/{id}','FeedbackController@feedback')->name('feedback');
 });

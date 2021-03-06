@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Doctor extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, \GeneaLabs\LaravelModelCaching\Traits\Cachable;
     
     protected $guarded = [];
     
@@ -82,6 +82,12 @@ class Doctor extends Authenticatable
     public function appointments()
     {
        return $this->hasMany(Appointment::class,'doctor_id');
+    }
+
+    public function rating()
+    {
+       return $this->hasMany(Feedback::class,'doctor_id')
+                    ->avg('rating_value');
     }
 
 }
